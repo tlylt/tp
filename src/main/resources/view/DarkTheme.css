@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: black;
+    background-color: black; /* Used in the default.html file */
 }
 
 .label {
@@ -193,13 +193,13 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #FE900F;
 }
 
 .menu-bar .label {
     -fx-font-size: 14pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 0.9;
 }
 
@@ -333,7 +333,11 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    /*-fx-background-color: transparent, #383838, transparent, #383838;*/
+    -fx-background-image: url("../images/table.png");
+    -fx-opacity: 0.88;
+    -fx-background-color: transparent, black;
+    -fx-background-size: cover, auto;
     -fx-background-radius: 0;
 }
 
