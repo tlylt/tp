@@ -255,42 +255,41 @@ The following activity diagram summarizes what happens when a user executes a fi
   <img src="images/FindActivityDiagram.png" alt="FindActivityDiagram" width="450px" />
 </p>
 
-### Send/run command feature
+### Send & run command feature
 
 #### What it is
 
-Allows the user to make an API call to a specific endpoint, either with values from a saved endpoint (`send`) or values passed in as command line arguments (`run`).
+Allows the user to make a request to a specific API endpoint, either with data from a saved endpoint (`send` command) or values passed in from the command box (`run` command). The main use cases for send and run commands are as follows:
+* Send: the user wants to get the latest response from the API service provider of a particular endpoint in the endpoint list. The endpoint invoked will also update its response details in the storage file.
+* Run: the user wants to run a quick API request without saving. The parameters required for the API request is supplied as part of the command parameters, and the response will be displayed for inspection.
 
 #### Implementation
 
-The send/run mechanism is very involved in the invocation of an actual outbound request that is facilitated by the `request` package. Both commands allow users to get the latest response from an endpoint and display the result for inspection.
+The send and run commands both involve the invocation of an actual outbound request that is facilitated by the `request` package. Both commands allow users to get the latest response from an endpoint and display the result for inspection. 
 
-Given below is an example usage scenario and how the send command behaves at each step.
+Given below is an example usage scenario of how the `run` command behaves at each step.
 
-Step 1. The user launches the application and executes `add -x get -u https://api.data.gov.sg/v1/environment/air-temperature` to save an endpoint (a `get` request to the API URL address above).
+Step 1. The user launches the application and executes `run -x get -u https://api.data.gov.sg/v1/environment/air-temperature` to make a call to the specified API (which is a `get` request to the URL above).
 
-Step 2. The user executes `send 1` command to first retrieve the endpoint stored at index 1. The endpoint at that index will then be used to generate an `EndpointCaller` object.
+Step 2. The `run` command parser first validates the user input. According to the format of the run command supplied, the parser retrieves the relevant endpoint details in order to construct a `run` command. 
 
-Step 3. The `send` command calls `EndpointCaller#callEndpoint()`, sending out the HTTP request to the targeted API service provider and retrieves a response. The existing endpoint used to invoke the request will be used to generate an updated endpoint with the returned response and saved into the model.
+Step 3. The `run` command creates an `EndpointCaller` object to execute the request via `EndpointCaller#callEndpoint()`, sending out the HTTP request to the targeted API service provider and retrieves a response.
 
-Step 4. The response retrieved will also be parsed and passed to UI for further formatting and displaying to the user.
+Step 4. The response will then be parsed and forwarded to `UI` for further formatting before displaying to the user.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a send command fails its execution, it will not call `model.setEndpoint()`, so the endpoint list state will not be updated or saved.
-
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a run command fails to execute, relevant error message will be provided.
 </div>
 
-The following sequence diagram shows how the send operation works:
+The following sequence diagram shows how the `run` operation works:
+in progress ...
 ![SendSequenceDiagram](images/SendSequenceDiagram.png)
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `SendCommand` should end 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `RunCommand` should end 
 at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
 </div>
-
-The `run` command deploys a similar trick but for an endpoint specified directly within the command arguments.
 
 <div style="page-break-after: always;"></div>
 
-The following activity diagram summarizes what happens when a user executes a run command:
+The following activity diagram summarizes what happens when a user executes a valid run command:
 <p align="center">
   <img alt="RunActivityDiagram" src="images/RunActivityDiagram.png" width="400px"/>
 </p>
