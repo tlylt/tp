@@ -467,15 +467,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low
 (For all use cases below, the **System** is the `imPoster` and the **Actor** is
 the `user`, unless specified otherwise)
 
-### <ins>General Use Cases</ins>
+### General Use Cases
 
 **Use case G01 - View Help**
 
 **MSS**
 
 1.  User requests for help with using the application
-2.  User enters help command into command box
-3.  imPoster returns a help link for the user to click
+2.  User enters `help` command into command box
+3.  imPoster returns a help page with links and command summary for the user
 
     Use case ends.
 
@@ -492,7 +492,7 @@ the `user`, unless specified otherwise)
 **MSS**
 
 1.  User requests to exit the application
-2.  User enters exit command into command box
+2.  User enters `exit` command into command box
 3.  imPoster exits
 
     Use case ends.
@@ -510,7 +510,7 @@ the `user`, unless specified otherwise)
 **MSS**
 
 1.  User requests to toggle application theme
-2.  User enters toggle command into command box
+2.  User enters `toggle` command into command box
 3.  imPoster switches to user specified application theme
 
     Use case ends.
@@ -529,7 +529,7 @@ the `user`, unless specified otherwise)
 
     Use case resumes at step 2.
 
-### <ins>Endpoint Use Cases</ins>
+### Endpoint Use Cases
 
 **Use case E01 - Add an API endpoint**
 
@@ -549,6 +549,12 @@ the `user`, unless specified otherwise)
 
     Use case resumes at step 2.
 
+- 2b. Adding the endpoint results in a duplicate
+
+  - 2b1. imPoster shows a message informing the user that the desired endpoint already exist
+
+    Use case resumes at step 1.
+
 **Use case E02 - Edit an API endpoint**
 
 **MSS**
@@ -567,9 +573,15 @@ the `user`, unless specified otherwise)
 
     Use case resumes at step 2.
 
-- 2b. The given index is invalid
+- 2b. Editing the endpoint results in a duplicate
 
-  - 2b1. imPoster shows an error message to the user
+  - 2b1. imPoster shows a message informing the user that the desired endpoint already exist
+
+    Use case resumes at step 1.
+
+- 2c. The given index is invalid
+
+  - 2c1. imPoster shows an error message to the user
 
     Use case resumes at step 2.
 
@@ -616,11 +628,11 @@ the `user`, unless specified otherwise)
 
     Use case resumes at step 2.
 
-- 2b. The given search result is empty
+- 3a. The search result comes up empty
 
-  - 2b1. imPoster shows a message informing the user that there are no endpoints found
+  - 3a1. imPoster shows a message informing the user that there are no endpoints found
 
-    Use case resumes at step 1.
+    Use case ends.
 
 **Use case E05 - List all saved API endpoints**
 
@@ -640,7 +652,7 @@ the `user`, unless specified otherwise)
 
     Use case resumes at step 2.
     
-- 3a.The API endpoint list is empty
+- 3a. The API endpoint list is empty
 
   - 3a1. imPoster shows an additional message to inform the user that the endpoint list is empty
 
@@ -770,7 +782,7 @@ the `user`, unless specified otherwise)
 
 ## **Appendix D: Non-Functional Requirements**
 
-1.  Should work on any _mainstream OS_ as long as it has Java `11` or above
+1.  Should work on any [mainstream OS](#glossary-OS) as long as it has Java `11` or above
     installed.
 2.  Should be able to hold up to 1000 API endpoints without a noticeable
     sluggishness in performance for typical usage.
@@ -778,21 +790,33 @@ the `user`, unless specified otherwise)
     code, not system admin commands) should be able to accomplish most of the
     tasks faster using commands than using the mouse.
 4.  Should feel simple and easy to use as compared to existing
-    solutions such as [Postman](https://www.postman.com/).
+    solutions such as [Postman](#glossary-postman).
 5.  Should be able to provide a proper response even if a call to an API
     endpoint fails due to third-party unavailability.
 6.  Should not crash or throw unexpected errors when internet connection is
     unavailable.
-7.  Should be able to display responses not exceeding 100000 lines from an
+7.  Should be able to display responses not exceeding 100000 characters from an
     API call without crashing or throwing unexpected errors.
 
 ## **Appendix E: Glossary**
 
-- **Mainstream OS**: Windows, Linux, Unix, OS-X
-- **API endpoint/Endpoint**: The point of entry in a communication channel for two
-  systems to interact
-- **API Call/Call**: A process where information is transferred, processed and a response is returned
-- **Postman**: An existing API client for developers
+
+| Term                                         | Description                                               |
+| -------------------------------------------- | --------------------------------------------------------- |
+| **Mainstream OS** | <a name="glossary-OS"></a> Windows, Linux, Unix, OS-X  |
+| **API** | <a name="glossary-api"></a> API is short for **Application Programming Interface** and allows two systems to interact with each other  |
+| **Call** | <a name="glossary-call"></a> A call to an API endpoint refers to the process of sending a [request to the server and then receiving a response](#83-what-are-requests-and-responses)          |
+| **Endpoint** | <a name="glossary-endpoint"></a> The communication point of a system that allows it to interact with another system, commonly accessed through a URL |
+| **Request** | A process in which information is sent out to an endpoint through one of the [request methods](#84-request-methods) (a more detailed explanation can be found [here](#83-what-are-requests-and-responses)) |
+| **Response** | The information obtained from an endpoint after a request is sent to it (a more detailed explanation can be found [here](#83-what-are-requests-and-responses)) |
+| **Parameter**   | Information passed in as part of a command with its type identified by a prefix (e.g. `METHOD`) |
+| **Prefix**   | Characters used to identify the following parameter (e.g. `-x` is the prefix for the parameter `METHOD`) |
+| **JSON** | JSON is short for **JavaScript Object Notation** which is a lightweight format for data storage (a more detailed explanation can be found [here](#85-json-format)) |
+| **Protocol** | <a name="glossary-protocol"></a> A protocol is a system of rules that define how data is exchanged within or between systems |
+| **Postman** | <a name="glossary-postman"></a> An existing API client for developers. See more [here](https://www.postman.com/) |
+
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix F: Developer Workflow**
  
