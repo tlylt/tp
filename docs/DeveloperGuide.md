@@ -901,7 +901,27 @@ Given below are instructions to test the app manually.
    
    1. With the app still open, enter `exit` in the command box or click on the close window button.<br>
       Expected: App closes.
+      
+### Show an endpoint
 
+1. Show the details of a selected endpoint from the endpoint list in the result display
+
+    1. Prerequisites: There exists at least one (but less than 100) endpoints in the endpoint list.
+
+    1. Test case: `show 1`<br>
+       Expected: Details of the first endpoint in the endpoint list is shown in the result display.
+
+    1. Test case: `show`<br>
+       Expected: Error details shown in the result display, with a result message saying `Invalid command format!...`.
+
+    1. Test case: `show 0`<br>
+       Expected: Error details shown in the result display, with a result message saying `An index must be specified.
+       ..`. Other incorrect show commands to try: `show -1`, `show one`
+
+    1. Test case: `show 100`<br>
+       Expected: Error details shown in the result display, with a result message saying `Index provided is not 
+       within...`. Other incorrect remove commands to try: `show 101`,`show 999` 
+       
 ### Edit an endpoint
 
 1. Edit an endpoint
@@ -965,6 +985,34 @@ Given below are instructions to test the app manually.
    1. Test case: `remove 100`<br>
       Expected: No endpoint is deleted. Error details shown in the result display, with a result message saying `Index provided is not within...`
       Other incorrect remove commands to try: `remove x` (where x is larger than the list size, and is a positive integer that is less than the maximum integer size). <br>
+
+### List all endpoints
+
+1. List all endpoints 
+   
+    1. Prerequisites: There exists multiple endpoints in the list.
+
+    1. Test case: `list`<br>
+       Expected: All endpoints are shown in the endpoint list, with a
+       result message saying `Listed all saved...`.
+
+2. List all endpoints from the endpoint list after a `find` command
+
+    1. Prerequisites: List all endpoints using the `list` command. There exists multiple endpoints in the list. 
+       Perform a `find` command such that the endpoint list shows less than actual number of endpoints. 
+
+    1. Test case: `list`<br>
+       Expected: Filter from the `find` will be cleared and all endpoints are shown in the endpoint list, with a 
+       result message saying `Listed all saved...`.
+
+3. List all endpoints from the endpoint list after a `clear` command
+
+    1. Prerequisites: List all endpoints using the `list` command. There exists multiple endpoints in the list.
+       Perform a `clear` command such that all endpoints are cleared from the endpoint list.
+
+    1. Test case: `list`<br>
+       Expected: No endpoints are shown in the endpoint list, with a result message saying `It seems like your list 
+       is empty!...`.
 
 ### Clear all endpoints
 
