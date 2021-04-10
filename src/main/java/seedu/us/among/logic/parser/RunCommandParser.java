@@ -60,12 +60,7 @@ public class RunCommandParser implements Parser<RunCommand> {
         Set<Header> headerList = ParserUtil.parseHeaders(argMultimap.getAllValues(PREFIX_HEADER));
         Data data = ParserUtil.parseData(argMultimap.getValue(PREFIX_DATA).orElse(""));
 
-
-
         Endpoint endpoint = new Endpoint(method, address, data, headerList, new HashSet<>());
         return new RunCommand(endpoint);
     }
-
-
-
 }
