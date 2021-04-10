@@ -302,30 +302,41 @@ Step 4. The response will then be parsed and forwarded to `UI` for further forma
 </div>
 
 The following sequence diagram shows how the `run` operation works:
-in progress ...
-![SendSequenceDiagram](images/SendSequenceDiagram.png)
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `RunCommand` should end
-at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+<p align="center">
+  <img width="900px" src="images/RunSequenceDiagram.png" >
+</p>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for 
+`RunCommandParser`, `RunCommand` and `EndpointCaller` should end at the destroy marker (X) but due to a limitation 
+of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
 <div style="page-break-after: always;"></div>
 
 The following activity diagram summarizes what happens when a user executes a valid run command:
 <p align="center">
-  <img width="400px" src="images/RunActivityDiagram.png" >
+  <img width="430px" src="images/RunActivityDiagram.png" >
 </p>
 
 #### Design consideration:
 
-##### Aspect: How send & run executes
+##### Aspect: How run executes
 
-* **Alternative 1 (current choice):** The Send and Run command parsers verify the validity of endpoint/url address before generating the respective commands.
-    * Pros: Keep the checking logic within the same place.
-    * Cons: It may not be clear if the command contains a valid endpoint.
+* **Alternative 1 (current choice):** The `run` command parser does a primitive verification of the url via 
+  the helper method `ParserUtil#parseAddress`. The helper method in term invokes `Address#isValidAddress` to 
+  intercept obvious non-urls provided by the user. The parser thereafter generates a `run` command with the verified 
+  input.
+    * Pros: By abstracting out the `parseAddress` method and encapsulating the validity of URL address in the `Address` 
+      class, the helper method can be utilised by other commands such as the `add` command.
+    * Cons: An extra layer of abstraction may make it harder to make quick changes to the logic in URL address 
+      verification.
 
-* **Alternative 2:** Individual command checks if the endpoint/url address is valid by itself.
-    * Pros: Checking of url address validity right before execution will ensure proper request is processed.
-    * Cons: Duplication of code across Send and Run commands.
+* **Alternative 2:** Individual command parser checks for the url address validity by itself.
+    * Pros: Making it obvious to developers to view the exact steps taken in parsing the user input within 
+      each command parser.
+    * Cons: Duplication of code across all command parsers that require the verification of URLs, such as `add` and 
+      `run` commands.
 
 <div style="page-break-after: always;"></div>
 
